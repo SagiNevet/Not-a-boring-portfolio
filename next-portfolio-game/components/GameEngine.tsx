@@ -697,7 +697,6 @@ export default function GameEngine({
   return (
     <div className="relative mx-auto mt-8 w-full max-w-[960px] px-2 md:px-0">
       <div
-        ref={gameContainerRef}
         className="relative mx-auto overflow-hidden rounded-[32px] border border-slate-700 bg-slate-950"
         style={{ 
           width: '100%',
