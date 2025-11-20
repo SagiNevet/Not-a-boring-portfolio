@@ -114,20 +114,42 @@ export default function GameEngine({
       if (containerRef.current && typeof window !== 'undefined') {
         const container = containerRef.current.parentElement;
         if (container) {
-          const availableWidth = container.clientWidth - 16; // Account for padding
-          const availableHeight = window.innerHeight - 200; // Account for header/UI
+          const isMobile = window.innerWidth < 768;
+          const isLandscape = window.innerWidth > window.innerHeight;
+          
+          // More space available in landscape mode
+          const padding = isMobile ? 8 : 0;
+          const headerSpace = isMobile && isLandscape ? 120 : 200;
+          
+          const availableWidth = container.clientWidth - padding;
+          const availableHeight = window.innerHeight - headerSpace;
+          
           const scaleX = availableWidth / WORLD_WIDTH;
           const scaleY = availableHeight / WORLD_HEIGHT;
-          const scale = Math.min(scaleX, scaleY, 1); // Don't scale up, only down
+          
+          // In mobile landscape, allow slightly larger scale for better experience
+          const maxScale = isMobile && isLandscape ? 1.1 : 1;
+          const scale = Math.min(scaleX, scaleY, maxScale);
+          
           containerRef.current.style.transform = `scale(${scale})`;
           containerRef.current.style.transformOrigin = 'top center';
         }
       }
     };
 
-    updateScale();
+    // Initial scale calculation
+    setTimeout(updateScale, 100); // Small delay to ensure DOM is ready
+    
     window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
+    window.addEventListener('orientationchange', () => {
+      // Delay to allow orientation change to complete
+      setTimeout(updateScale, 200);
+    });
+    
+    return () => {
+      window.removeEventListener('resize', updateScale);
+      window.removeEventListener('orientationchange', updateScale);
+    };
   }, []);
 
   // Initialize all info blocks as 'idle' with hasSpawnedCoin = false (NO localStorage)
@@ -718,13 +740,14 @@ export default function GameEngine({
         : 'idle';
 
   return (
-    <div className="relative mx-auto mt-8 w-full max-w-[960px] flex justify-center">
+    <div className="relative mx-auto mt-8 w-full max-w-[960px] flex justify-center items-start">
       <div
         ref={containerRef}
         className="relative overflow-hidden rounded-[32px] border border-slate-700 bg-slate-950"
         style={{ 
           width: WORLD_WIDTH,
           height: WORLD_HEIGHT,
+          transition: 'transform 0.3s ease-out',
         }}
       >
       {/* Background layers - rendered first */}
