@@ -81,6 +81,7 @@ export default function GameEngine({
   onUnlockPortfolio,
 }: GameEngineProps) {
   const router = useRouter();
+  const containerRef = useRef<HTMLDivElement>(null);
   const keysRef = useRef({ left: false, right: false, jump: false });
   const [player, setPlayer] = useState({
     x: 120,
@@ -106,6 +107,28 @@ export default function GameEngine({
   useEffect(() => {
     onCollectRef.current = onCollect;
   }, [onCollect]);
+
+  // Calculate scale for mobile responsiveness
+  useEffect(() => {
+    const updateScale = () => {
+      if (containerRef.current && typeof window !== 'undefined') {
+        const container = containerRef.current.parentElement;
+        if (container) {
+          const availableWidth = container.clientWidth - 16; // Account for padding
+          const availableHeight = window.innerHeight - 200; // Account for header/UI
+          const scaleX = availableWidth / WORLD_WIDTH;
+          const scaleY = availableHeight / WORLD_HEIGHT;
+          const scale = Math.min(scaleX, scaleY, 1); // Don't scale up, only down
+          containerRef.current.style.transform = `scale(${scale})`;
+          containerRef.current.style.transformOrigin = 'top center';
+        }
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
 
   // Initialize all info blocks as 'idle' with hasSpawnedCoin = false (NO localStorage)
   // Reset everything on mount/refresh
@@ -695,13 +718,13 @@ export default function GameEngine({
         : 'idle';
 
   return (
-    <div className="relative mx-auto mt-8 w-full max-w-[960px] px-2 md:px-0">
+    <div className="relative mx-auto mt-8 w-full max-w-[960px] flex justify-center">
       <div
-        className="relative mx-auto overflow-hidden rounded-[32px] border border-slate-700 bg-slate-950"
+        ref={containerRef}
+        className="relative overflow-hidden rounded-[32px] border border-slate-700 bg-slate-950"
         style={{ 
-          width: '100%',
-          aspectRatio: `${WORLD_WIDTH} / ${WORLD_HEIGHT}`,
-          maxWidth: WORLD_WIDTH,
+          width: WORLD_WIDTH,
+          height: WORLD_HEIGHT,
         }}
       >
       {/* Background layers - rendered first */}
