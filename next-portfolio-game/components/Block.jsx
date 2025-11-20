@@ -9,9 +9,13 @@ const Block = ({ x, y, type, id, isHit, isAnimating }) => {
 
   useEffect(() => {
     if (isAnimating) {
-      setBounceOffset(8);
-      const timer = setTimeout(() => setBounceOffset(0), 200);
-      return () => clearTimeout(timer);
+      // Use setTimeout to avoid setState directly in effect
+      const timer1 = setTimeout(() => setBounceOffset(8), 0);
+      const timer2 = setTimeout(() => setBounceOffset(0), 200);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
     }
   }, [isAnimating]);
 

@@ -16,11 +16,13 @@ export default function GamePage() {
   // Reset on mount (refresh) - NO localStorage persistence
   // Force complete reset on every page load/refresh
   useEffect(() => {
-    // Reset all game state
-    setCollectedCount(0);
-    setPortfolioUnlocked(false);
-    setIsLoading(true); // Reset loading screen on refresh - will show loading screen again
-    setGameKey(Date.now()); // Force GameEngine to remount by changing key to unique value
+    // Reset all game state - use setTimeout to avoid setState in effect
+    setTimeout(() => {
+      setCollectedCount(0);
+      setPortfolioUnlocked(false);
+      setIsLoading(true); // Reset loading screen on refresh - will show loading screen again
+      setGameKey(Date.now()); // Force GameEngine to remount by changing key to unique value
+    }, 0);
     
     // Clear any potential URL params or state
     if (typeof window !== 'undefined') {

@@ -1,30 +1,35 @@
-# Fix Submodule Error
+# Fix Submodule Error - IMPORTANT!
 
 ## Problem
-GitHub Actions is trying to fetch `next-portfolio-game` as a submodule, but there's no URL configured in `.gitmodules`.
+`next-portfolio-game` is registered as a Git submodule, but has no URL configured. This causes GitHub Actions to fail because the directory is not checked out.
 
-## Solution 1: Disable Submodule Fetching (Already Done)
-I've created `.github/workflows/build.yml` with `submodules: false` to prevent this error.
+## ⚠️ REQUIRED FIX - Run These Commands Locally
 
-## Solution 2: Remove Submodule Reference (If needed)
-If `next-portfolio-game` is NOT supposed to be a submodule, run these commands locally:
+You MUST run these commands in your local Git repository to fix the issue:
 
 ```bash
-# Remove the submodule reference from Git
+# 1. Remove the submodule reference from Git index
 git rm --cached next-portfolio-game
 
-# Remove the .git directory inside next-portfolio-game if it exists
-rm -rf next-portfolio-game/.git
+# 2. Remove the .git directory inside next-portfolio-game if it exists
+# On Windows (PowerShell):
+Remove-Item -Recurse -Force next-portfolio-game\.git -ErrorAction SilentlyContinue
 
-# Add next-portfolio-game as a regular directory
+# On Linux/Mac:
+# rm -rf next-portfolio-game/.git
+
+# 3. Add next-portfolio-game as a regular directory (not submodule)
 git add next-portfolio-game
 
-# Commit the changes
+# 4. Commit the changes
 git commit -m "Convert next-portfolio-game from submodule to regular directory"
 
-# Push to remote
+# 5. Push to remote
 git push
 ```
+
+## After Running These Commands
+After you push these changes, GitHub Actions should work correctly because `next-portfolio-game` will be treated as a regular directory instead of a submodule.
 
 ## Solution 3: If it SHOULD be a submodule
 If `next-portfolio-game` should be a submodule, create a `.gitmodules` file:

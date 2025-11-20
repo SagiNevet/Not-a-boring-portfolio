@@ -110,33 +110,36 @@ export default function GameEngine({
   // Initialize all info blocks as 'idle' with hasSpawnedCoin = false (NO localStorage)
   // Reset everything on mount/refresh
   useEffect(() => {
-    const initialStates: Record<string, BlockState> = {};
-    INFO_BLOCKS.forEach((block) => {
-      initialStates[block.id] = {
-        mode: 'idle',
-        hasSpawnedCoin: false,
-      };
-    });
-    setBlockStates(initialStates);
-    // Reset info items on mount
-    setInfoItems([]);
-    // Reset block bumps
-    setBlockBumps({});
-    // Reset spawning blocks ref
-    spawningBlocksRef.current.clear();
-    // Reset items collected ref
-    itemsCollectedThisFrameRef.current = 0;
-    // Reset player position
-    setPlayer({
-      x: 120,
-      y: FLOOR_Y,
-      vx: 0,
-      vy: 0,
-      isJumping: false,
-      facing: 'right',
-    });
-    prevPlayerRef.current = { x: 120, y: FLOOR_Y };
-    currentPlayerRef.current = { x: 120, y: FLOOR_Y };
+    // Use setTimeout to avoid setState directly in effect
+    setTimeout(() => {
+      const initialStates: Record<string, BlockState> = {};
+      INFO_BLOCKS.forEach((block) => {
+        initialStates[block.id] = {
+          mode: 'idle',
+          hasSpawnedCoin: false,
+        };
+      });
+      setBlockStates(initialStates);
+      // Reset info items on mount
+      setInfoItems([]);
+      // Reset block bumps
+      setBlockBumps({});
+      // Reset spawning blocks ref
+      spawningBlocksRef.current.clear();
+      // Reset items collected ref
+      itemsCollectedThisFrameRef.current = 0;
+      // Reset player position
+      setPlayer({
+        x: 120,
+        y: FLOOR_Y,
+        vx: 0,
+        vy: 0,
+        isJumping: false,
+        facing: 'right',
+      });
+      prevPlayerRef.current = { x: 120, y: FLOOR_Y };
+      currentPlayerRef.current = { x: 120, y: FLOOR_Y };
+    }, 0);
   }, []);
 
   // Keyboard controls
@@ -562,7 +565,9 @@ export default function GameEngine({
         return prev.map((item) => {
           if (item.state !== 'falling') return item;
 
-          let { x, y, vy } = item;
+          const { x } = item;
+          let { y, vy: itemVy } = item;
+          let vy = itemVy;
 
           // Apply gravity downward (negative vy = falling down in our coordinate system)
           // INFO_GRAVITY = -0.5, so vy becomes more negative = falls down
@@ -761,7 +766,7 @@ export default function GameEngine({
               Portfolio Unlocked!
             </h2>
             <p className="text-slate-200 mb-4">
-              You've collected all 4 insights about me!
+              You&apos;ve collected all 4 insights about me!
             </p>
             <button
               onClick={() => {

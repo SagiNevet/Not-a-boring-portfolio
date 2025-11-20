@@ -106,7 +106,7 @@ export default function AboutPage() {
               Fullstack · Product · Builder
             </p>
             <h1 className="mt-4 text-4xl font-semibold text-white">
-              Hi, I'm <span className="font-black">Sagi Nevet</span>
+              Hi, I&apos;m <span className="font-black">Sagi Nevet</span>
             </h1>
             <p className="mt-4 text-base text-slate-200">
               Fullstack engineer crafting clean React/Next.js experiences wired to
@@ -180,7 +180,7 @@ export default function AboutPage() {
             </p>
             <p>
               Experienced with state management, routing, debugging, automation,
-              and Git-based workflows. I'm looking to join an engineering team,
+              and Git-based workflows. I&apos;m looking to join an engineering team,
               learn professional development best practices, and contribute to
               products that deliver measurable value.
             </p>

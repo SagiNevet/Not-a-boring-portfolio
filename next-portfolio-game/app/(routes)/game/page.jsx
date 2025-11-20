@@ -5,7 +5,6 @@ import Link from 'next/link';
 import GameEngine from '@/components/GameEngine';
 import GamePlatform from '@/components/GamePlatform';
 
-const GAME_WIDTH = 960;
 const GAME_HEIGHT = 480;
 const WORLD_WIDTH = 2400;
 const PLATFORM_HEIGHT = 72;
