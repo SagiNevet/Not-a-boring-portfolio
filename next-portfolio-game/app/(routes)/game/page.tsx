@@ -10,6 +10,8 @@ export default function GamePage() {
   const [collectedCount, setCollectedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [gameKey, setGameKey] = useState(0); // Key to force GameEngine remount on refresh
+  const [isPortrait, setIsPortrait] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
   const { portfolioUnlocked, setPortfolioUnlocked } = usePortfolio();
 
@@ -55,6 +57,27 @@ export default function GamePage() {
     }
   }, [collectedCount, portfolioUnlocked]);
 
+  // Check for mobile and portrait orientation
+  useEffect(() => {
+    const checkOrientation = () => {
+      if (typeof window !== 'undefined') {
+        const isMobileDevice = window.innerWidth < 768; // md breakpoint
+        const isPortraitMode = window.innerHeight > window.innerWidth;
+        setIsMobile(isMobileDevice);
+        setIsPortrait(isPortraitMode);
+      }
+    };
+
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
+
   if (isLoading) {
     return <LoadingScreen onComplete={handleLoadingComplete} />;
   }
@@ -64,6 +87,20 @@ export default function GamePage() {
       <h1 className="mt-6 text-center text-3xl font-bold tracking-[0.2em] text-slate-100">
         PLAY TO GET TO KNOW ME
       </h1>
+
+      {/* Mobile portrait orientation message */}
+      {isMobile && isPortrait && (
+        <div className="mt-8 mx-4 p-6 rounded-2xl bg-slate-900/90 border-2 border-emerald-400/50 text-center max-w-md">
+          <div className="text-4xl mb-4">📱</div>
+          <h2 className="text-xl font-bold text-emerald-400 mb-2">
+            Please Rotate Your Device
+          </h2>
+          <p className="text-slate-300 text-sm">
+            For the best gaming experience, please rotate your device to landscape mode (horizontal).
+          </p>
+          <div className="mt-4 text-2xl animate-spin">↻</div>
+        </div>
+      )}
 
       <div className="flex flex-col items-center">
         <div className="mt-4 flex items-center gap-3">
@@ -77,12 +114,14 @@ export default function GamePage() {
           )}
         </div>
 
-        <GameEngine
-          key={gameKey}
-          onCollect={handleCollect}
-          collectedCount={collectedCount}
-          onUnlockPortfolio={handleUnlockPortfolio}
-        />
+        {!(isMobile && isPortrait) && (
+          <GameEngine
+            key={gameKey}
+            onCollect={handleCollect}
+            collectedCount={collectedCount}
+            onUnlockPortfolio={handleUnlockPortfolio}
+          />
+        )}
 
         {portfolioUnlocked && (
           <div className="mt-6 flex flex-col items-center gap-3">
