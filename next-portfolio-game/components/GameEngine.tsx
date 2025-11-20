@@ -695,10 +695,16 @@ export default function GameEngine({
         : 'idle';
 
   return (
-    <div
-      className="relative mx-auto mt-8 h-[480px] w-[960px] max-w-full overflow-hidden rounded-[32px] border border-slate-700 bg-slate-950"
-      style={{ width: WORLD_WIDTH, height: WORLD_HEIGHT }}
-    >
+    <div className="relative mx-auto mt-8 w-full max-w-[960px] px-2 md:px-0">
+      <div
+        ref={gameContainerRef}
+        className="relative mx-auto overflow-hidden rounded-[32px] border border-slate-700 bg-slate-950"
+        style={{ 
+          width: '100%',
+          aspectRatio: `${WORLD_WIDTH} / ${WORLD_HEIGHT}`,
+          maxWidth: WORLD_WIDTH,
+        }}
+      >
       {/* Background layers - rendered first */}
       <img
         src="/assets/backgrounds/stars.svg"
@@ -850,6 +856,7 @@ export default function GameEngine({
             →
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
