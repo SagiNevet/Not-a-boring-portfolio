@@ -1,0 +1,13 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mountain-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22345a"/>
+      <stop offset="100%" stop-color="#111a32"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="none"/>
+  <path
+    d="M0 420 L140 260 L260 380 L380 240 L520 400 L640 260 L780 420 L930 250 L1080 420 L1200 300 L1200 600 L0 600 Z"
+    fill="url(#mountain-grad)"/>
+</svg>
+

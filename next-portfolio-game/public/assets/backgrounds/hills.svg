@@ -1,0 +1,13 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hill-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b2b45"/>
+      <stop offset="100%" stop-color="#0c1428"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="none"/>
+  <path
+    d="M0 460 C120 420 200 460 320 440 C480 410 560 470 720 450 C880 420 980 480 1200 430 L1200 600 L0 600 Z"
+    fill="url(#hill-grad)"/>
+</svg>
+

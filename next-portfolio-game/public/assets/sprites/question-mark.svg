@@ -1,0 +1,24 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="qm-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff0a1"/>
+      <stop offset="100%" stop-color="#f4b942"/>
+    </linearGradient>
+    <filter id="qm-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.35)"/>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="16" ry="16" fill="none"/>
+  <path
+    d="M34 48a2 2 0 01-2 2h0a2 2 0 01-2-2v-4a2 2 0 012-2h0a2 2 0 012 2z"
+    fill="#f4b942"
+  />
+  <path
+    d="M31.8 12c-7.57 0-13.37 4.79-13.37 11 0 5.42 3.47 8.94 9.18 9.69l3.24.43c2.56.35 3.71 1.44 3.71 3.37 0 2.08-1.45 3.39-3.84 3.39-2.64 0-3.94-1.09-4.38-3.29a2 2 0 00-1.96-1.6h-3c-1.32 0-2.31 1.21-2 2.5 1.02 4.54 4.6 7.2 10.34 7.2 6.38 0 10.68-3.45 10.68-9.08 0-5.13-3.13-8.23-9.56-9.14l-3.24-.44c-2.64-.35-3.85-1.39-3.85-3.32 0-2 1.82-3.43 4.55-3.43 2.66 0 4.2 1.07 4.64 3.22.22 1.1 1.2 1.87 2.33 1.87h3.02c1.32 0 2.32-1.2 2-2.5C41.74 14.44 37.74 12 31.8 12z"
+    fill="url(#qm-grad)"
+    filter="url(#qm-shadow)"
+    stroke="#d9851a"
+    stroke-width="1.2"
+  />
+</svg>
+
