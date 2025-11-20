@@ -127,8 +127,8 @@ export default function GameEngine({
           const scaleX = availableWidth / WORLD_WIDTH;
           const scaleY = availableHeight / WORLD_HEIGHT;
           
-          // In mobile landscape, allow slightly larger scale for better experience
-          const maxScale = isMobile && isLandscape ? 1.1 : 1;
+          // In mobile landscape, allow much larger scale for better experience
+          const maxScale = isMobile && isLandscape ? 1.4 : 1;
           const scale = Math.min(scaleX, scaleY, maxScale);
           
           containerRef.current.style.transform = `scale(${scale})`;
@@ -833,25 +833,48 @@ export default function GameEngine({
       )}
 
       {/* Mobile touch controls - only visible on mobile */}
-      <div className="absolute inset-x-0 bottom-4 flex justify-center gap-3 md:hidden z-40 pointer-events-none">
-        <div className="flex gap-3 rounded-2xl border border-white/20 bg-black/60 backdrop-blur-sm px-4 py-3 pointer-events-auto">
+      <div className="absolute inset-x-0 bottom-4 flex justify-center gap-4 md:hidden z-40 pointer-events-none">
+        <div className="flex gap-4 rounded-2xl border border-white/20 bg-black/60 backdrop-blur-sm px-5 py-4 pointer-events-auto">
           {/* Left arrow */}
           <button
             onPointerDown={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               keysRef.current.left = true;
             }}
             onPointerUp={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               keysRef.current.left = false;
             }}
-            onPointerLeave={() => {
+            onPointerLeave={(e) => {
+              e.preventDefault();
               keysRef.current.left = false;
             }}
-            onPointerCancel={() => {
+            onPointerCancel={(e) => {
+              e.preventDefault();
               keysRef.current.left = false;
             }}
-            className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-2xl font-bold text-white active:bg-white/20 select-none touch-none"
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            className="flex h-16 w-16 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-3xl font-bold text-white active:bg-white/20 select-none touch-none"
+            style={{
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              WebkitTouchCallout: 'none',
+              touchAction: 'manipulation',
+            }}
             aria-label="Move left"
           >
             ←
@@ -861,19 +884,42 @@ export default function GameEngine({
           <button
             onPointerDown={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               keysRef.current.jump = true;
             }}
             onPointerUp={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               keysRef.current.jump = false;
             }}
-            onPointerLeave={() => {
+            onPointerLeave={(e) => {
+              e.preventDefault();
               keysRef.current.jump = false;
             }}
-            onPointerCancel={() => {
+            onPointerCancel={(e) => {
+              e.preventDefault();
               keysRef.current.jump = false;
             }}
-            className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-xl font-bold text-white active:bg-white/20 select-none touch-none"
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            className="flex h-16 w-16 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-2xl font-bold text-white active:bg-white/20 select-none touch-none"
+            style={{
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              WebkitTouchCallout: 'none',
+              touchAction: 'manipulation',
+            }}
             aria-label="Jump"
           >
             ⤒
@@ -883,19 +929,42 @@ export default function GameEngine({
           <button
             onPointerDown={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               keysRef.current.right = true;
             }}
             onPointerUp={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               keysRef.current.right = false;
             }}
-            onPointerLeave={() => {
+            onPointerLeave={(e) => {
+              e.preventDefault();
               keysRef.current.right = false;
             }}
-            onPointerCancel={() => {
+            onPointerCancel={(e) => {
+              e.preventDefault();
               keysRef.current.right = false;
             }}
-            className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-2xl font-bold text-white active:bg-white/20 select-none touch-none"
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            className="flex h-16 w-16 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-3xl font-bold text-white active:bg-white/20 select-none touch-none"
+            style={{
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              WebkitTouchCallout: 'none',
+              touchAction: 'manipulation',
+            }}
             aria-label="Move right"
           >
             →
