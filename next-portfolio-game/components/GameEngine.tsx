@@ -611,8 +611,7 @@ export default function GameEngine({
           if (item.state !== 'falling') return item;
 
           const { x } = item;
-          let { y, vy: itemVy } = item;
-          let vy = itemVy;
+          let { y, vy } = item;
 
           // Apply gravity downward (negative vy = falling down in our coordinate system)
           // INFO_GRAVITY = -0.5, so vy becomes more negative = falls down
