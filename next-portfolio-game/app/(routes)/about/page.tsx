@@ -144,14 +144,15 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="flex flex-col items-center">
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 p-4">
+            <div className="overflow-hidden rounded-full border border-white/10 bg-slate-900/60 p-2 w-[200px] h-[200px]">
               <Image
                 src="/assets/sagi-portrait.PNG"
                 alt="Sagi Nevet portrait"
-                width={420}
-                height={520}
+                width={200}
+                height={200}
                 priority
-                className="h-auto w-full rounded-2xl object-cover"
+                className="h-full w-full rounded-full object-cover"
+                style={{ objectPosition: 'center 10%' }}
               />
             </div>
             <p className="mt-4 text-sm text-white/70">
